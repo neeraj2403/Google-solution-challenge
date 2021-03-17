@@ -1,0 +1,107 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/home.dart';
+import 'form.dart';
+import 'login.dart';
+import 'dart:async';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Medi',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          fontFamily: 'Raleway',
+        ),
+        home: MainPage(title: 'Medi'),
+        routes: {
+          FormRegister.routename: (ctx) => FormRegister(),
+          Login.routename: (ctx) => Login(),
+          HomePage.routename: (ctx) => HomePage(),
+        });
+  }
+}
+
+class MainPage extends StatefulWidget {
+  MainPage({Key key, this.title}) : super(key: key);
+  final String title;
+  var globaldata;
+
+  @override
+  MainPageState createState() => MainPageState();
+}
+
+class MainPageState extends State<MainPage> {
+  @override
+  void initState() {
+    super.initState();
+    _loadWidget();
+  }
+
+  _loadWidget() async {
+    var _duration = Duration(seconds: 5);
+    return Timer(_duration, navigationPage);
+  }
+
+  void navigationPage() {
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+  }
+
+  void func() {}
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Color(0xFFB2E0EA), Color(0xFF0C5584)])),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Container(
+                  width: 300,
+                  height: 300,
+                  child:
+                      ClipOval(child: Image.asset('assets/distribution.jpg'))),
+              Text(
+                "\nMediCare",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 45,
+                    fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "Healing Together\n",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text("A Global Pharma Logistics ",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  )),
+            ],
+          )
+        ],
+      ),
+    ));
+  }
+}
