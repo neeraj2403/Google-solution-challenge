@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Components/BottomNav.dart';
 import 'package:flutter_application_1/home.dart';
+import 'Components/Landingpage.dart';
 import 'form.dart';
 import 'login.dart';
 import 'dart:async';
 
-void main() => runApp(MyApp());
+void main() => runApp(BottomNav());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
