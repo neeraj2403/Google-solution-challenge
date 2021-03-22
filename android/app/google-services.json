@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "325024817417",
+    "firebase_url": "https://solution-challenge-c01bd-default-rtdb.firebaseio.com",
+    "project_id": "solution-challenge-c01bd",
+    "storage_bucket": "solution-challenge-c01bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325024817417:android:f5751fe492a42ae89eb3d8",
+        "android_client_info": {
+          "package_name": "com.example.medicare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "325024817417-a9sejlbbro72nbm4dmfu9jh0h2kcai36.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAX0-5UNMbakBeV1mA24FJqZ3EZBCi_FMw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "325024817417-a9sejlbbro72nbm4dmfu9jh0h2kcai36.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

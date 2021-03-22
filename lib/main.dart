@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/home.dart';
+import 'home.dart';
 import 'form.dart';
 import 'login.dart';
 import 'dart:async';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
+  runApp(MaterialApp(
+    home: MyApp(),
+    debugShowCheckedModeBanner: false,
+  ));
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
