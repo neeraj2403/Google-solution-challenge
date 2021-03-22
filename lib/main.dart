@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:flutter_application_1/Components/BottomNav.dart';
-import 'package:flutter_application_1/home.dart';
-import 'Components/Landingpage.dart';
-=======
 import 'home.dart';
->>>>>>> a736cee1f6a4d8fdb186ee3cf1fe568d17734754
 import 'form.dart';
 import 'login.dart';
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 
-<<<<<<< HEAD
-void main() => runApp(BottomNav());
-=======
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
@@ -22,7 +13,6 @@ void main() async {
     debugShowCheckedModeBanner: false,
   ));
 }
->>>>>>> a736cee1f6a4d8fdb186ee3cf1fe568d17734754
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

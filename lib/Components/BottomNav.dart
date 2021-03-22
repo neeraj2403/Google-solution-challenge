@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Components/Addmedicine.dart';
-import 'package:flutter_application_1/Components/Landingpage.dart';
-import 'package:flutter_application_1/Components/Requests.dart';
-import 'package:flutter_application_1/Components/profile.dart';
-import 'package:flutter_application_1/form.dart';
+import 'package:medicare/Components/profile.dart';
+
+import 'Addmedicine.dart';
+import 'Landingpage.dart';
+import 'Requests.dart';
 
 class BottomNav extends StatefulWidget {
   BottomNav({Key key}) : super(key: key);
