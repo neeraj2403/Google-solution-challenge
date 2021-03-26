@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:medicare/Components/BottomNav.dart';
+import 'Components/product_details.dart';
 import 'home.dart';
 import 'form.dart';
 import 'login.dart';
@@ -9,7 +11,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
   runApp(MaterialApp(
-    home: MyApp(),
+    home: ProductDetails(),
+    theme: ThemeData(fontFamily: 'Montserrat'),
     debugShowCheckedModeBanner: false,
   ));
 }
@@ -22,7 +25,7 @@ class MyApp extends StatelessWidget {
         title: 'Medi',
         theme: ThemeData(
           primarySwatch: Colors.blue,
-          fontFamily: 'Raleway',
+          fontFamily: 'Montserrat',
         ),
         home: MainPage(title: 'Medi'),
         routes: {
@@ -86,6 +89,8 @@ class MainPageState extends State<MainPage> {
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 45,
+                    fontFamily: 'Montserrat-Bold',
+                    
                     fontWeight: FontWeight.bold),
               ),
               Text(

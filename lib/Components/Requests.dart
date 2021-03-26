@@ -11,7 +11,7 @@ class _RequestsPageState extends State<RequestsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
        appBar: AppBar(
-      title: const Text('Details Page'),
+      title: const Text('Requests Page'),
     ),
     
       

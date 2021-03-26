@@ -21,7 +21,7 @@ class _BottomNavState extends State<BottomNav> {
  
   //     ];
   final List<Widget> _widgetOptions = <Widget>[
-    LandingPage(),
+    ChartsDemo(),
     RequestsPage(),
     AddMedicine(),
     ProfilePage(),
