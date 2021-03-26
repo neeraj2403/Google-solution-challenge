@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'country.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'countryhome.dart';
 
 final _usernamecontroller = TextEditingController();
 final _passwordcontroller = TextEditingController();
@@ -43,16 +44,16 @@ class LoginState extends State<Login> {
             found = true;
 
             widget.country = Country(
-              username: values['username'],
-              password: values['password'],
-            );
+                username: values['username'],
+                password: values['password'],
+                name: values['name']);
             print('over here');
           }
           if (found) {
             print('found');
 
-            // Navigator.pushReplacementNamed(context, CitizenHomePage.routename,
-            //    arguments: widget._citizen);
+            Navigator.pushReplacementNamed(context, CountryHome.routename,
+                arguments: widget.country);
           }
           if (found == false) {
             print('login failed!');

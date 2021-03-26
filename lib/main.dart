@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:medicare/addmedicine.dart';
+import 'package:medicare/requests.dart';
 import 'home.dart';
 import 'form.dart';
 import 'login.dart';
 import 'dart:async';
+import 'countryhome.dart';
+import 'country.dart';
+import 'addmedicine.dart';
+import 'requests.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -19,17 +25,37 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Medi',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          fontFamily: 'Raleway',
-        ),
-        home: MainPage(title: 'Medi'),
-        routes: {
-          FormRegister.routename: (ctx) => FormRegister(),
-          Login.routename: (ctx) => Login(),
-          HomePage.routename: (ctx) => HomePage(),
-        });
+      title: 'Medi',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        fontFamily: 'Raleway',
+      ),
+      home: MainPage(title: 'Medi'),
+      routes: {
+        FormRegister.routename: (ctx) => FormRegister(),
+        Login.routename: (ctx) => Login(),
+        HomePage.routename: (ctx) => HomePage(),
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == CountryHome.routename) {
+          final args = settings.arguments;
+          return MaterialPageRoute(builder: (context) {
+            return CountryHome(args as Country);
+          });
+        } else if (settings.name == AddMedicine.routename) {
+          final args = settings.arguments;
+          return MaterialPageRoute(builder: (context) {
+            return AddMedicine(args as Country);
+          });
+        } else if (settings.name == RequestsPage.routename) {
+          final args = settings.arguments;
+          return MaterialPageRoute(builder: (context) {
+            return RequestsPage(args as Country);
+          });
+        }
+      },
+      debugShowCheckedModeBanner: false,
+    );
   }
 }
 
