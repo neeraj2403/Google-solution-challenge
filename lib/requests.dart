@@ -72,7 +72,7 @@ class _RequestsPageState extends State<RequestsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Requests'),
-        backgroundColor: Color(0xFF0C5584),,
+        backgroundColor: Color(0xFF0C5584),
       ),
       body: generateItemsList(),
       

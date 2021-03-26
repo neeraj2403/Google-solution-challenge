@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:medicare/addmedicine.dart';
-import 'package:medicare/requests.dart';
-=======
 import 'package:medicare/Components/BottomNav.dart';
 import 'product_details.dart';
->>>>>>> b01a45ac4857e9436228d21b58271b3928912155
 import 'home.dart';
 import 'form.dart';
 import 'login.dart';
@@ -31,39 +26,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-<<<<<<< HEAD
-      title: 'Medi',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Raleway',
-      ),
-      home: MainPage(title: 'Medi'),
-      routes: {
-        FormRegister.routename: (ctx) => FormRegister(),
-        Login.routename: (ctx) => Login(),
-        HomePage.routename: (ctx) => HomePage(),
-      },
-      onGenerateRoute: (settings) {
-        if (settings.name == CountryHome.routename) {
-          final args = settings.arguments;
-          return MaterialPageRoute(builder: (context) {
-            return CountryHome(args as Country);
-          });
-        } else if (settings.name == AddMedicine.routename) {
-          final args = settings.arguments;
-          return MaterialPageRoute(builder: (context) {
-            return AddMedicine(args as Country);
-          });
-        } else if (settings.name == RequestsPage.routename) {
-          final args = settings.arguments;
-          return MaterialPageRoute(builder: (context) {
-            return RequestsPage(args as Country);
-          });
-        }
-      },
-      debugShowCheckedModeBanner: false,
-    );
-=======
         title: 'Medi',
         theme: ThemeData(
           primarySwatch: Colors.blue,
@@ -75,7 +37,6 @@ class MyApp extends StatelessWidget {
           Login.routename: (ctx) => Login(),
           HomePage.routename: (ctx) => HomePage(),
         });
->>>>>>> b01a45ac4857e9436228d21b58271b3928912155
   }
 }
 
