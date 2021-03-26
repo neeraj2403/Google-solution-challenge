@@ -335,6 +335,7 @@ class _FormRegisterState extends State<FormRegister> {
                                       //   _passwordcontroller.clear();
                                       //   _countrycontroller.clear();
                                       // },
+                                      onPressed: () {  },
                                       child: Text(
                                         'Register',
                                         style: TextStyle(
