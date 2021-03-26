@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medicare/Components/BottomNav.dart';
-import 'Components/product_details.dart';
+import 'product_details.dart';
 import 'home.dart';
 import 'form.dart';
 import 'login.dart';
