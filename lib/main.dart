@@ -11,7 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
   runApp(MaterialApp(
-    home: ProductDetails(),
+    home: BottomNav(),
     theme: ThemeData(fontFamily: 'Montserrat'),
     debugShowCheckedModeBanner: false,
   ));

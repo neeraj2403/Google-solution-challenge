@@ -36,7 +36,8 @@ class _BottomNavState extends State<BottomNav> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Navigation());
+    return MaterialApp(home: Navigation(),
+    theme: ThemeData(fontFamily: 'Montserrat'),);
   }
 
   Scaffold Navigation() {
@@ -50,8 +51,8 @@ class _BottomNavState extends State<BottomNav> {
     bottomNavigationBar: BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          backgroundColor: Colors.black,
-          icon: Icon(Icons.home),
+          backgroundColor: Color.fromRGBO(236,245,250,1),
+          icon: Icon(Icons.home,color: Color.fromRGBO(0,129,192,1),),
           label: 'Home',
         ),
         // BottomNavigationBarItem(
