@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:medicare/Components/BottomNav.dart';
+import 'package:medicare/medicine_data.dart';
+// import 'package:medicare/Components/Addmedicine.dart';
+// import 'package:medicare/addmedicine.dart';
 import 'product_details.dart';
 import 'home.dart';
 import 'form.dart';
@@ -15,7 +17,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
   runApp(MaterialApp(
-    home: BottomNav(),
+    home: Products(),
     theme: ThemeData(fontFamily: 'Montserrat'),
     debugShowCheckedModeBanner: false,
   ));
@@ -36,8 +38,20 @@ class MyApp extends StatelessWidget {
           FormRegister.routename: (ctx) => FormRegister(),
           Login.routename: (ctx) => Login(),
           HomePage.routename: (ctx) => HomePage(),
-        });
-  }
+        },
+        // ignore: missing_return
+        onGenerateRoute: (settings) {
+        if (settings.name == CountryHome.routename) {
+          final args = settings.arguments;
+          return MaterialPageRoute(builder: (context) {
+            return CountryHome(args as Country);
+          });
+        } else if (settings.name == Products.routename) {
+          final args = settings.arguments;
+          return MaterialPageRoute(builder: (context) {
+            return Products();
+          });
+        }  });}
 }
 
 class MainPage extends StatefulWidget {

@@ -41,7 +41,7 @@ class _CountryHomeState extends State<CountryHome> {
               ),
               onPressed: () {
                 if (name == "Shipment") {
-                  Navigator.pushNamed(context, AddMedicine.routename,
+                  Navigator.pushNamed(context, Products.routename,
                       arguments: widget.country);
                 } else if (name == "Requests") {
                   //             if (widget.citizen.isvaccinated == false)
