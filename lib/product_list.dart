@@ -35,10 +35,40 @@ class ProductList extends StatefulWidget {
 
 class _ProductListState extends State<ProductList> {
   bool isloading;
+  bool isloading1;
+  void work1(String k) async {
+    final dbreference1 = FirebaseDatabase.instance.reference();
+    await dbreference1
+        .child(k + '/exporting')
+        .once()
+        .then((DataSnapshot data1) {
+      print(data1);
+      if (data1 != null) {
+        print(data1.value.keys);
+        var keys1 = data1.value.keys;
+        print(keys1.runtimeType);
+        print(keys1);
+        var values = data1.value;
+        print(values);
+        for (var key in keys1) {
+          print(values[key]);
+          if (key == widget.prod.name) {
+            conformationList.add(new _exportclass(
+                key, k, values[key].toString(), widget.prod.tocountry));
+          } else
+            print('data is empty');
+        }
+      }
+    });
+    setState(() {
+      isloading1 = false;
+    });
+  }
+
   @override
   void work() async {
     final dbreference = FirebaseDatabase.instance.reference();
-    final dbreference1 = FirebaseDatabase.instance.reference();
+
     await dbreference.once().then((DataSnapshot data) {
       if (data != null) {
         //print(data.value.keys);
@@ -53,28 +83,7 @@ class _ProductListState extends State<ProductList> {
           var k = key;
           print(k);
           print(k.runtimeType);
-          dbreference1
-              .child(k + '/exporting')
-              .once()
-              .then((DataSnapshot data1) {
-            print(data1);
-            if (data1 != null) {
-              print(data1.value.keys);
-              var keys1 = data1.value.keys;
-              print(keys1.runtimeType);
-              print(keys1);
-              var values = data1.value;
-              print(values);
-              for (var key in keys1) {
-                print(values[key]);
-                if (key == widget.prod.name) {
-                  conformationList.add(new _exportclass(
-                      key, k, values[key].toString(), widget.prod.tocountry));
-                } else
-                  print('data is empty');
-              }
-            }
-          });
+          work1(k);
         }
       }
     });
@@ -88,6 +97,7 @@ class _ProductListState extends State<ProductList> {
     super.initState();
     setState(() {
       isloading = true;
+      isloading1 = true;
       work();
     });
   }
@@ -154,7 +164,7 @@ class Single_prod extends StatelessWidget {
         item_quantity: prod_quantity,
         item_tocountry: prod_tocountry);
     double c_width = MediaQuery.of(context).size.width * 0.9;
-    return SingleChildScrollView(
+    return Flexible(
         child: Container(
       height: 150,
       margin: const EdgeInsets.only(left: 25, right: 25, top: 10),
@@ -182,21 +192,21 @@ class Single_prod extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  prod_country,
-                  style: TextStyle(fontSize: 12),
+                  'Country of Manufacture: ' + prod_country,
+                  style: TextStyle(fontSize: 15),
                 ),
               ],
             ),
           ),
           Container(
             padding: const EdgeInsets.only(left: 20.0),
-            margin: const EdgeInsets.only(top: 4),
+            margin: const EdgeInsets.only(top: 4, bottom: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  prod_quantity,
-                  style: TextStyle(fontSize: 12),
+                  'Quantity Available: ' + prod_quantity,
+                  style: TextStyle(fontSize: 15),
                 ),
               ],
             ),

@@ -5,8 +5,7 @@ import 'country.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class _manufactureclass {
-  String name, company, description, price;
-  int quantity;
+  String name, company, description, price, quantity;
   _manufactureclass(
       this.name, this.company, this.description, this.price, this.quantity) {}
 }
@@ -75,6 +74,7 @@ class _ManufactureState extends State<Manufacture> {
             prod_description: conformationList[index].description,
             prod_company: conformationList[index].company,
             prod_price: conformationList[index].price,
+            prod_quantity: conformationList[index].quantity,
           );
         });
   }
@@ -94,7 +94,8 @@ class _ManufactureState extends State<Manufacture> {
               color: Colors.white,
             ),
             onPressed: () {
-              // do something
+              Navigator.pushNamed(context, '/ManufactureForm',
+                  arguments: widget.country);
             },
           )
         ],
@@ -122,20 +123,23 @@ class Single_prod extends StatelessWidget {
   final prod_company;
   final prod_description;
   final prod_price;
+  final prod_quantity;
 
   Single_prod({
     this.prod_name,
     this.prod_company,
     this.prod_description,
     this.prod_price,
+    this.prod_quantity,
   });
 
   @override
   Widget build(BuildContext context) {
-    double c_width = MediaQuery.of(context).size.width * 0.9;
-    return Container(
-      height: 150,
-      margin: const EdgeInsets.only(left: 25, right: 25, top: 10),
+    double c_width = MediaQuery.of(context).size.width * 1.2;
+    return Flexible(
+        child: Container(
+      padding: EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
       decoration: BoxDecoration(color: Color.fromRGBO(237, 246, 251, 1)),
       child: Column(
         children: [
@@ -147,7 +151,7 @@ class Single_prod extends StatelessWidget {
               children: [
                 Text(
                   prod_name,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 // Text('100gm')
               ],
@@ -161,13 +165,53 @@ class Single_prod extends StatelessWidget {
               children: [
                 Text(
                   prod_company,
-                  style: TextStyle(fontSize: 12),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(left: 20.0),
+            margin: const EdgeInsets.only(top: 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Price: ' + prod_price,
+                  style: TextStyle(fontSize: 14),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(left: 20.0),
+            margin: const EdgeInsets.only(top: 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Quantity: ' + prod_quantity,
+                  style: TextStyle(fontSize: 14),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(left: 20.0),
+            margin: const EdgeInsets.only(top: 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                    child: Text(
+                  'Description:\n' + prod_description,
+                  style: TextStyle(fontSize: 10),
+                )),
               ],
             ),
           ),
         ],
       ),
-    );
+    ));
   }
 }

@@ -173,7 +173,8 @@ class HomePageState extends State<HomePage> {
                             ]))),
                   ]),
                   Container(
-                      width: 160,
+                      margin: EdgeInsets.only(left: 9),
+                      width: 140,
                       height: 300,
                       child: Image.asset('assets/home2.jpeg'))
                 ]),

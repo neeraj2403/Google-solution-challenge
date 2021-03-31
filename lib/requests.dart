@@ -8,8 +8,7 @@ import 'product_list.dart';
 import 'single.dart';
 
 class _manufactureclass {
-  String name, tocountry;
-  int quantity;
+  String name, tocountry, quantity;
   _manufactureclass(this.name, this.quantity, this.tocountry) {}
 }
 
@@ -107,8 +106,7 @@ class _RequestsPageState extends State<RequestsPage> {
 }
 
 class Single_prod extends StatelessWidget {
-  final String prod_name, prod_tocountry;
-  final int prod_quantity;
+  final String prod_name, prod_tocountry, prod_quantity;
 
   Single_prod({this.prod_name, this.prod_quantity, this.prod_tocountry});
 
@@ -139,13 +137,13 @@ class Single_prod extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.only(left: 20.0),
-            margin: const EdgeInsets.only(top: 4),
+            margin: const EdgeInsets.only(top: 4, bottom: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  prod_quantity.toString(),
-                  style: TextStyle(fontSize: 12),
+                  'Quantity Required: ' + prod_quantity,
+                  style: TextStyle(fontSize: 13),
                 ),
               ],
             ),

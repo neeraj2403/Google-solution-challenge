@@ -130,7 +130,7 @@ class _OrderPageState extends State<OrderPage> {
   }
 
   _loadWidget() async {
-    var _duration = Duration(seconds: 2);
+    var _duration = Duration(seconds: 4);
     return Timer(_duration, navigationPage);
   }
 
@@ -157,12 +157,19 @@ class _OrderPageState extends State<OrderPage> {
                 )
               : Container(
                   child: Column(children: [
+                  Container(
+                      width: 300,
+                      height: 300,
+                      child:
+                          ClipOval(child: Image.asset('assets/success.jpg'))),
                   Text("Congratulations!!",
                       style: TextStyle(
                           fontSize: 20,
                           color: Color(0xFF0C5584),
                           fontWeight: FontWeight.bold)),
                   Text("The order has been placed successfully",
+                      style: TextStyle(fontSize: 15, color: Colors.black)),
+                  Text("Check your email for details",
                       style: TextStyle(fontSize: 15, color: Colors.black))
                 ]))
         ])));

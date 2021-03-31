@@ -1,6 +1,5 @@
 class Single {
-  String name, tocountry;
-  int quantity;
+  String name, tocountry, quantity;
 
   Single({
     this.name,

@@ -16,6 +16,7 @@ import 'requests.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'single.dart';
 import 'product.dart';
+import 'manufacture_details.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -77,6 +78,11 @@ class MyApp extends StatelessWidget {
           final args = settings.arguments;
           return MaterialPageRoute(builder: (context) {
             return OrderPage(args as Product);
+          });
+        } else if (settings.name == ManufactureForm.routename) {
+          final args = settings.arguments;
+          return MaterialPageRoute(builder: (context) {
+            return ManufactureForm(args as Country);
           });
         }
       },

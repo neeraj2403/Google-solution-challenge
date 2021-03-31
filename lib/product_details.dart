@@ -105,98 +105,98 @@ class _ProductDetailsState extends State<ProductDetails> {
           );
 
           return Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            color: Colors.white,
-            margin: EdgeInsets.all(15),
-            elevation: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Text(
-                    '${conformation[index].i_name}',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Color(0xFF0C5584),
-                        fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    '${conformation[index].i_country}',
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Color(0xFF0C5584),
-                        fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    'Company: ${conformation[index].item_company}',
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Color(0xFF0C5584),
-                        fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    '${conformation[index].item_description}',
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                  Text(
-                    'Pirce:${conformation[index].item_price}',
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                  Text(
-                    'Quantity Available:${conformation[index].i_quantity}',
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(color: Colors.grey[200]))),
-                    child: TextFormField(
-                      controller: quantitycontroller,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Quantity Required",
-                          hintStyle: TextStyle(color: Colors.grey[400])),
-                    ),
-                  ),
-                  RaisedButton(
-                    onPressed: () {
-                      // Product products = Product(
-                      //   name: conformation[index].i_name,
-                      //   country: conformation[index].i_country,
-                      //   tocountry: conformation[index].i_tocountry,
-                      //   quantity: quantitycontroller.text.trim,
-                      // );
-                      Navigator.pushNamed(context, OrderPage.routename,
-                          arguments: products);
-                    },
-                    child: Text(
-                      'Place Order',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    textColor: Colors.white,
-                    color: Color(0xFF0C5584),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                  )
-                ],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
               ),
-            ),
-          );
+              color: Color.fromRGBO(237, 246, 251, 1),
+              margin: EdgeInsets.all(15),
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${conformation[index].i_name}',
+                        style: TextStyle(
+                            fontSize: 23,
+                            color: Color(0xFF0C5584),
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        'Manufactured By: ${conformation[index].item_company}, ${conformation[index].i_country}',
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Color(0xFF0C5584),
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        'Price: ${conformation[index].item_price}\n',
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Color(0xFF0C5584),
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.left,
+                      ),
+                      Text('Description:',
+                          style: TextStyle(
+                              fontSize: 13, fontWeight: FontWeight.bold)),
+                      Text(
+                        '${conformation[index].item_description}\n',
+                        style: TextStyle(
+                          fontSize: 13,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        'Quantity Available: ${conformation[index].i_quantity}',
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Color(0xFF0C5584),
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.left,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(color: Colors.grey[200]))),
+                        child: TextFormField(
+                          controller: quantitycontroller,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Quantity Required",
+                              hintStyle: TextStyle(color: Colors.grey[400])),
+                        ),
+                      ),
+                      RaisedButton(
+                        onPressed: () {
+                          // Product products = Product(
+                          //   name: conformation[index].i_name,
+                          //   country: conformation[index].i_country,
+                          //   tocountry: conformation[index].i_tocountry,
+                          //   quantity: quantitycontroller.text.trim,
+                          // );
+                          Navigator.pushNamed(context, OrderPage.routename,
+                              arguments: products);
+                        },
+                        child: Text(
+                          'Place Order',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        textColor: Colors.white,
+                        color: Color(0xFF0C5584),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                      )
+                    ],
+                  ),
+                ),
+              ));
         });
   }
 

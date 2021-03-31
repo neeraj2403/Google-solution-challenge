@@ -1,6 +1,5 @@
 class Product {
-  String name, tocountry, country;
-  var quantity;
+  String name, tocountry, country, quantity;
 
   Product({this.name, this.country, this.tocountry, this.quantity});
 }

@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'country.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'home.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 
 //User user;
@@ -17,6 +19,7 @@ final mobilenocontroller = TextEditingController();
 final medicinecontroller = TextEditingController();
 final dosagecontroller = TextEditingController();
 final dbref = FirebaseDatabase.instance.reference();
+final _nameController = TextEditingController();
 
 //void register(
 // {String name,
@@ -85,7 +88,7 @@ class FormRegister extends StatefulWidget {
 
 class _FormRegisterState extends State<FormRegister> {
   bool notregistered = true;
-  static List<String> friendsList = [null];
+  static List<String> medicinesList = [null];
   @override
   void initState() {
     super.initState();
@@ -110,12 +113,6 @@ class _FormRegisterState extends State<FormRegister> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  //  if(citizen != null)
-                  //  Center(child:
-                  //  SpinKitDualRing(color: Colors.black,
-                  //  duration: Duration(seconds: 1),) ,),
-
-                  // if (citizen == null)
                   Column(children: [
                     Container(
                         width: 300,
@@ -258,7 +255,7 @@ class _FormRegisterState extends State<FormRegister> {
                                             TextStyle(color: Colors.grey[400])),
                                   ),
                                 ),
-                                ..._getFriends(),
+                                ..._getmedicines(),
                                 // Container(
                                 //           child: Row(
                                 //         children: [
@@ -312,44 +309,42 @@ class _FormRegisterState extends State<FormRegister> {
                                 //         size: 30,
                                 //       )),
                                 // ),
-                                Container(
-                                  height: 1.4 *
-                                      (MediaQuery.of(context).size.height / 20),
-                                  width: 8.5 *
-                                      (MediaQuery.of(context).size.width / 10),
-                                  margin: EdgeInsets.only(bottom: 20),
-                                  child: RaisedButton(
-                                      elevation: 5.0,
-                                      color: Color(0xFF0C5584),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0)),
-//
-                                      // onPressed: () {
-                                      //   confirmuserifexits(
-                                      //       _usernamecontroller.text.trim(),
-                                      //       _passwordcontroller.text.trim(),
-                                      //       _countrycontroller.text.trim());
-
-                                      //   _usernamecontroller.clear();
-                                      //   _passwordcontroller.clear();
-                                      //   _countrycontroller.clear();
-                                      // },
-                                      onPressed: () {},
-                                      child: Text(
-                                        'Register',
-                                        style: TextStyle(
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              40,
-                                          // letterSpacing: 1.8,
-                                          color: Colors.white,
-                                        ),
-                                      )),
-                                ),
                               ],
                             ),
+                          ),
+                          Container(
+                            height:
+                                1.4 * (MediaQuery.of(context).size.height / 20),
+                            width:
+                                8.5 * (MediaQuery.of(context).size.width / 10),
+                            margin: EdgeInsets.only(top: 20, bottom: 20),
+                            child: RaisedButton(
+                                elevation: 5.0,
+                                color: Color(0xFF0C5584),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0)),
+//
+                                onPressed: () {
+                                  Fluttertoast.showToast(
+                                    msg: ' Successfully submitted the form! ',
+                                    toastLength: Toast.LENGTH_LONG,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Color(0xFF0C5584),
+                                    textColor: Colors.white,
+                                  );
+                                  Navigator.pushNamed(
+                                      context, HomePage.routename);
+                                },
+                                child: Text(
+                                  'Register',
+                                  style: TextStyle(
+                                    fontSize:
+                                        MediaQuery.of(context).size.height / 40,
+                                    // letterSpacing: 1.8,
+                                    color: Colors.white,
+                                  ),
+                                )),
                           ),
                           // RaisedButton(
                           //   onPressed: () {
@@ -385,24 +380,23 @@ class _FormRegisterState extends State<FormRegister> {
         ));
   }
 
-  List<Widget> _getFriends() {
-    List<Widget> friendsTextFields = [];
-    for (int i = 0; i < friendsList.length; i++) {
-      friendsTextFields.add(Padding(
+  List<Widget> _getmedicines() {
+    List<Widget> medicinesTextFields = [];
+    for (int i = 0; i < medicinesList.length; i++) {
+      medicinesTextFields.add(Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: Row(
           children: [
-            Expanded(child: FriendTextFields(i)),
+            Expanded(child: medicineTextFields(i)),
             SizedBox(
               width: 16,
             ),
-            // we need add button at last friends row
-            _addRemoveButton(i == friendsList.length - 1, i),
+            _addRemoveButton(i == medicinesList.length - 1, i),
           ],
         ),
       ));
     }
-    return friendsTextFields;
+    return medicinesTextFields;
   }
 
   /// add / remove button
@@ -410,10 +404,9 @@ class _FormRegisterState extends State<FormRegister> {
     return InkWell(
       onTap: () {
         if (add) {
-          // add new text-fields at the top of all friends textfields
-          friendsList.insert(0, null);
+          medicinesList.insert(0, null);
         } else
-          friendsList.removeAt(index);
+          medicinesList.removeAt(index);
         setState(() {});
       },
       child: Container(
@@ -432,14 +425,14 @@ class _FormRegisterState extends State<FormRegister> {
   }
 }
 
-class FriendTextFields extends StatefulWidget {
+class medicineTextFields extends StatefulWidget {
   final int index;
-  FriendTextFields(this.index);
+  medicineTextFields(this.index);
   @override
-  _FriendTextFieldsState createState() => _FriendTextFieldsState();
+  _medicineTextFieldsState createState() => _medicineTextFieldsState();
 }
 
-class _FriendTextFieldsState extends State<FriendTextFields> {
+class _medicineTextFieldsState extends State<medicineTextFields> {
   TextEditingController _nameController;
 
   @override
@@ -457,13 +450,16 @@ class _FriendTextFieldsState extends State<FriendTextFields> {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _nameController.text = _FormRegisterState.friendsList[widget.index] ?? '';
+      _nameController.text =
+          _FormRegisterState.medicinesList[widget.index] ?? '';
     });
 
     return TextFormField(
       controller: _nameController,
-      onChanged: (v) => _FormRegisterState.friendsList[widget.index] = v,
-      decoration: InputDecoration(hintText: 'Enter your friend\'s name'),
+      onChanged: (v) => _FormRegisterState.medicinesList[widget.index] = v,
+      decoration: InputDecoration(
+          hintText: 'Medicine you intake, Dosage',
+          hintStyle: TextStyle(color: Colors.grey[400])),
       validator: (v) {
         if (v.trim().isEmpty) return 'Please enter something';
         return null;
