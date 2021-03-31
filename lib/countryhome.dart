@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:medicare/country.dart';
-
-import 'addmedicine.dart';
+import 'manufacture.dart';
 import 'requests.dart';
+import 'export.dart';
 
 class CountryHome extends StatefulWidget {
-  static const routename = '/citizenhome';
+  static const routename = '/CountryHome';
   Country country;
   CountryHome(this.country) {
     print(country.name);
@@ -40,10 +40,14 @@ class _CountryHomeState extends State<CountryHome> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               onPressed: () {
-                if (name == "Shipment") {
-                  Navigator.pushNamed(context, AddMedicine.routename,
+                if (name == "Manufacture Details") {
+                  Navigator.pushNamed(context, Manufacture.routename,
                       arguments: widget.country);
-                } else if (name == "Requests") {
+                } else if (name == "Export Details") {
+                  //             if (widget.citizen.isvaccinated == false)
+                  Navigator.pushNamed(context, Export.routename,
+                      arguments: widget.country);
+                } else if (name == "Import Request") {
                   //             if (widget.citizen.isvaccinated == false)
                   Navigator.pushNamed(context, RequestsPage.routename,
                       arguments: widget.country);
@@ -63,7 +67,7 @@ class _CountryHomeState extends State<CountryHome> {
           backgroundColor: Color(0xFF0C5584),
           title: Row(
             children: <Widget>[
-              Text("Country Home page"),
+              Text("HomePage"),
               SizedBox(width: 10),
             ],
           ),
@@ -93,15 +97,17 @@ class _CountryHomeState extends State<CountryHome> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            cardcreator('Shipment', context),
-                            cardcreator('Requests', context),
+                            cardcreator('Manufacture Details', context),
+                            cardcreator('Export Details', context),
+                            cardcreator('Import Request', context),
                           ],
                         ),
                       ],
                     ),
                   ),
                 ))),
-        body: Container(
+        body: SingleChildScrollView(
+            child: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topRight,
@@ -157,6 +163,6 @@ class _CountryHomeState extends State<CountryHome> {
               ],
             ),
           ),
-        ));
+        )));
   }
 }

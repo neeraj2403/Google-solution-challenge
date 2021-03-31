@@ -36,41 +36,8 @@ class HomePageState extends State<HomePage> {
                 if (name == "Form") {
                   Navigator.pushNamed(context, FormRegister.routename);
                 } else if (name == "Login") {
-                  //             if (widget.citizen.isvaccinated == false)
                   Navigator.pushNamed(context, Login.routename);
                 }
-                //                   arguments: widget.citizen)
-                //             .then((value) {
-                //         setState(() {
-                //         _updatecitizeninfo();
-                //       _getdata();
-                //   });
-                //                  });
-                //              else {
-                // if (citizen.date == null)
-                // citizen.date =DateTime.now();
-
-                //                  DateTime date = widget.citizen.date.add(Duration(days: 28));
-                //                widget.day = date.day.toString();
-                //              widget.month = date.month.toString();
-                //            widget.year = date.year.toString();
-                //          String dateinstring =
-                //            widget.day + "/" + widget.month + "/" + widget.year;
-                //      Navigator.pop(context);
-                //    Fluttertoast.showToast(
-                //    msg:
-                //      'You have Already taken your first shot,\n Next shot is scheduled to ' +
-                //        dateinstring,
-                //                   toastLength: Toast.LENGTH_LONG,
-                //                 gravity: ToastGravity.CENTER,
-                //               timeInSecForIosWeb: 1,
-                //             fontSize: 15,
-                //           backgroundColor: Colors.blueGrey[900],
-                //         textColor: Colors.white,
-                //     );
-                // }
-                //              }
-                //            }
               },
             ),
           ],
@@ -210,7 +177,6 @@ class HomePageState extends State<HomePage> {
                       height: 300,
                       child: Image.asset('assets/home2.jpeg'))
                 ]),
-
                 Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -237,12 +203,10 @@ class HomePageState extends State<HomePage> {
                             textAlign: TextAlign.left,
                           ),
                         ]))),
-
                 Container(
                     width: 300,
                     height: 300,
                     child: Image.asset('assets/home1.jpeg')),
-
                 Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -287,10 +251,6 @@ class HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                // cardcreator('Earn  badges by completing challenges!', context),
-                // Container(
-                //   padding: EdgeInsets.all(5),
-                // ),
               ],
             ),
           ),

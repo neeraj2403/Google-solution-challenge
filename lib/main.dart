@@ -1,26 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:medicare/order.dart';
+import 'package:medicare/product_list.dart';
+import 'export.dart';
+import 'sdetail.dart';
+import 'medicine_data.dart';
+import 'product_details.dart';
 import 'home.dart';
 import 'form.dart';
 import 'login.dart';
 import 'dart:async';
 import 'countryhome.dart';
 import 'country.dart';
-import 'addmedicine.dart';
+import 'manufacture.dart';
 import 'requests.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'single.dart';
+import 'product.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
   runApp(MaterialApp(
-    home: ProductDetails(),
+    home: MyApp(),
     theme: ThemeData(fontFamily: 'Montserrat'),
     debugShowCheckedModeBanner: false,
   ));
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -41,15 +48,35 @@ class MyApp extends StatelessWidget {
           return MaterialPageRoute(builder: (context) {
             return CountryHome(args as Country);
           });
-        } else if (settings.name == AddMedicine.routename) {
+        } else if (settings.name == Manufacture.routename) {
           final args = settings.arguments;
           return MaterialPageRoute(builder: (context) {
-            return AddMedicine(args as Country);
+            return Manufacture(args as Country);
           });
         } else if (settings.name == RequestsPage.routename) {
           final args = settings.arguments;
           return MaterialPageRoute(builder: (context) {
             return RequestsPage(args as Country);
+          });
+        } else if (settings.name == Export.routename) {
+          final args = settings.arguments;
+          return MaterialPageRoute(builder: (context) {
+            return Export(args as Country);
+          });
+        } else if (settings.name == ProductList.routename) {
+          final args = settings.arguments;
+          return MaterialPageRoute(builder: (context) {
+            return ProductList(args as Single);
+          });
+        } else if (settings.name == ProductDetails.routename) {
+          final args = settings.arguments;
+          return MaterialPageRoute(builder: (context) {
+            return ProductDetails(args as Detail);
+          });
+        } else if (settings.name == OrderPage.routename) {
+          final args = settings.arguments;
+          return MaterialPageRoute(builder: (context) {
+            return OrderPage(args as Product);
           });
         }
       },
@@ -75,7 +102,7 @@ class MainPageState extends State<MainPage> {
   }
 
   _loadWidget() async {
-    var _duration = Duration(seconds: 5);
+    var _duration = Duration(seconds: 3);
     return Timer(_duration, navigationPage);
   }
 

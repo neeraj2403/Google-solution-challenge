@@ -1,59 +1,85 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:medicare/form.dart';
 import 'country.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'product_list.dart';
+import 'product_details.dart';
+import 'sdetail.dart';
 import 'single.dart';
 
-class _manufactureclass {
-  String name, tocountry;
-  int quantity;
-  _manufactureclass(this.name, this.quantity, this.tocountry) {}
+class _exportclass {
+  String name, country, quantity, tocountry;
+  _exportclass(
+    this.name,
+    this.country,
+    this.quantity,
+    this.tocountry,
+  ) {}
 }
 
-List<_manufactureclass> conformationList = List<_manufactureclass>();
+List<_exportclass> conformationList = List<_exportclass>();
 final database = FirebaseDatabase.instance.reference();
 
-class RequestsPage extends StatefulWidget {
-  Country country;
-
-  RequestsPage(this.country) {
-    print(country.name);
+class ProductList extends StatefulWidget {
+  Single prod;
+  ProductList(this.prod) {
+    print(prod.name);
+    print(prod.quantity);
+    print(prod.tocountry);
   }
+
   @override
-  static const routename = '/RequestPage';
-  _RequestsPageState createState() => _RequestsPageState();
+  static const routename = '/ProductList';
+  _ProductListState createState() => _ProductListState();
 }
 
-class _RequestsPageState extends State<RequestsPage> {
+class _ProductListState extends State<ProductList> {
   bool isloading;
   @override
   void work() async {
     final dbreference = FirebaseDatabase.instance.reference();
-    String data = widget.country.name + '/request';
-    await dbreference.child(data).once().then((DataSnapshot data) {
+    final dbreference1 = FirebaseDatabase.instance.reference();
+    await dbreference.once().then((DataSnapshot data) {
       if (data != null) {
-        // print(data.value.keys);
+        //print(data.value.keys);
         conformationList.clear();
         var keys = data.value.keys;
-        print(keys.runtimeType);
-        print(keys);
+        //print(keys.runtimeType);
+        //print(keys);
         var values = data.value;
+        //print(values);
+
         for (var key in keys) {
-          print(values[key]);
-          print(values[key].runtimeType);
-          conformationList.add(
-              new _manufactureclass(key, values[key], widget.country.name));
+          var k = key;
+          print(k);
+          print(k.runtimeType);
+          dbreference1
+              .child(k + '/exporting')
+              .once()
+              .then((DataSnapshot data1) {
+            print(data1);
+            if (data1 != null) {
+              print(data1.value.keys);
+              var keys1 = data1.value.keys;
+              print(keys1.runtimeType);
+              print(keys1);
+              var values = data1.value;
+              print(values);
+              for (var key in keys1) {
+                print(values[key]);
+                if (key == widget.prod.name) {
+                  conformationList.add(new _exportclass(
+                      key, k, values[key].toString(), widget.prod.tocountry));
+                } else
+                  print('data is empty');
+              }
+            }
+          });
         }
-      } else
-        print('data is empty');
+      }
     });
     setState(() {
-      {
-        isloading = false;
-      }
+      isloading = false;
     });
   }
 
@@ -73,6 +99,7 @@ class _RequestsPageState extends State<RequestsPage> {
         itemBuilder: (BuildContext context, int index) {
           return Single_prod(
             prod_name: conformationList[index].name,
+            prod_country: conformationList[index].country,
             prod_quantity: conformationList[index].quantity,
             prod_tocountry: conformationList[index].tocountry,
           );
@@ -85,7 +112,7 @@ class _RequestsPageState extends State<RequestsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Import Request"),
+        title: Text("List of Medicines"),
         backgroundColor: Color(0xFF0C5584),
       ),
       body: Center(
@@ -98,7 +125,7 @@ class _RequestsPageState extends State<RequestsPage> {
                 semanticsValue: "Loading..",
               )
             : conformationList.length == 0
-                ? Text("Currently no requests",
+                ? Text("No results found",
                     style: TextStyle(fontSize: 20, color: Color(0xFF0C5584)))
                 : generateItemsList()
       ])),
@@ -107,17 +134,28 @@ class _RequestsPageState extends State<RequestsPage> {
 }
 
 class Single_prod extends StatelessWidget {
-  final String prod_name, prod_tocountry;
-  final int prod_quantity;
+  final prod_name;
+  final prod_country;
+  final prod_quantity;
+  final prod_tocountry;
 
-  Single_prod({this.prod_name, this.prod_quantity, this.prod_tocountry});
+  Single_prod({
+    this.prod_name,
+    this.prod_country,
+    this.prod_quantity,
+    this.prod_tocountry,
+  });
 
   @override
   Widget build(BuildContext context) {
-    Single product = Single(
-        name: prod_name, quantity: prod_quantity, tocountry: prod_tocountry);
+    Detail item = Detail(
+        item_name: prod_name,
+        item_country: prod_country,
+        item_quantity: prod_quantity,
+        item_tocountry: prod_tocountry);
     double c_width = MediaQuery.of(context).size.width * 0.9;
-    return Container(
+    return SingleChildScrollView(
+        child: Container(
       height: 150,
       margin: const EdgeInsets.only(left: 25, right: 25, top: 10),
       decoration: BoxDecoration(color: Color.fromRGBO(237, 246, 251, 1)),
@@ -144,7 +182,20 @@ class Single_prod extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  prod_quantity.toString(),
+                  prod_country,
+                  style: TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(left: 20.0),
+            margin: const EdgeInsets.only(top: 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  prod_quantity,
                   style: TextStyle(fontSize: 12),
                 ),
               ],
@@ -156,11 +207,11 @@ class Single_prod extends StatelessWidget {
               // context,
               // MaterialPageRoute(
               //   builder: (context)=>ProductList(name:prod_name)
-              Navigator.pushNamed(context, ProductList.routename,
-                  arguments: product);
+              Navigator.pushNamed(context, ProductDetails.routename,
+                  arguments: item);
             },
             child: Text(
-              'Request',
+              'View Product',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             textColor: Colors.white,
@@ -170,6 +221,6 @@ class Single_prod extends StatelessWidget {
           )
         ],
       ),
-    );
+    ));
   }
 }

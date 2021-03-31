@@ -1,39 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:medicare/form.dart';
 import 'country.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'product_list.dart';
-import 'single.dart';
 
 class _manufactureclass {
-  String name, tocountry;
+  String name, company, description, price;
   int quantity;
-  _manufactureclass(this.name, this.quantity, this.tocountry) {}
+  _manufactureclass(
+      this.name, this.company, this.description, this.price, this.quantity) {}
 }
 
 List<_manufactureclass> conformationList = List<_manufactureclass>();
 final database = FirebaseDatabase.instance.reference();
 
-class RequestsPage extends StatefulWidget {
+class Export extends StatefulWidget {
   Country country;
-
-  RequestsPage(this.country) {
-    print(country.name);
-  }
+  Export(this.country) {}
   @override
-  static const routename = '/RequestPage';
-  _RequestsPageState createState() => _RequestsPageState();
+  static const routename = '/Export';
+  _ExportState createState() => _ExportState();
 }
 
-class _RequestsPageState extends State<RequestsPage> {
+class _ExportState extends State<Export> {
   bool isloading;
   @override
   void work() async {
     final dbreference = FirebaseDatabase.instance.reference();
-    String data = widget.country.name + '/request';
-    await dbreference.child(data).once().then((DataSnapshot data) {
+    await dbreference
+        .child(widget.country.name + '/manufacturing')
+        .once()
+        .then((DataSnapshot data) {
       if (data != null) {
         // print(data.value.keys);
         conformationList.clear();
@@ -42,18 +39,23 @@ class _RequestsPageState extends State<RequestsPage> {
         print(keys);
         var values = data.value;
         for (var key in keys) {
-          print(values[key]);
-          print(values[key].runtimeType);
-          conformationList.add(
-              new _manufactureclass(key, values[key], widget.country.name));
+          //       print('name: '+values[key]['name'].toString() +" mob:"+values[key]['mobileno'].toString());
+          // conformationList.add(values[key]['feedback']) ;
+          var _data = _manufactureclass(
+            key,
+            values[key]['company'],
+            values[key]['description'],
+            values[key]['price'],
+            values[key]['quantity'],
+          );
+          conformationList.add(_data);
         }
       } else
         print('data is empty');
     });
     setState(() {
-      {
-        isloading = false;
-      }
+      print("hallo");
+      isloading = false;
     });
   }
 
@@ -61,8 +63,8 @@ class _RequestsPageState extends State<RequestsPage> {
   void initState() {
     super.initState();
     setState(() {
-      isloading = true;
       work();
+      isloading = true;
     });
   }
 
@@ -73,8 +75,9 @@ class _RequestsPageState extends State<RequestsPage> {
         itemBuilder: (BuildContext context, int index) {
           return Single_prod(
             prod_name: conformationList[index].name,
-            prod_quantity: conformationList[index].quantity,
-            prod_tocountry: conformationList[index].tocountry,
+            prod_description: conformationList[index].description,
+            prod_company: conformationList[index].company,
+            prod_price: conformationList[index].price,
           );
         });
   }
@@ -85,7 +88,7 @@ class _RequestsPageState extends State<RequestsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Import Request"),
+        title: Text("Export Details"),
         backgroundColor: Color(0xFF0C5584),
       ),
       body: Center(
@@ -98,24 +101,31 @@ class _RequestsPageState extends State<RequestsPage> {
                 semanticsValue: "Loading..",
               )
             : conformationList.length == 0
-                ? Text("Currently no requests",
+                ? Text("Currently no exports",
                     style: TextStyle(fontSize: 20, color: Color(0xFF0C5584)))
                 : generateItemsList()
       ])),
+      // SingleChildScrollView(
+      // child: Column(
     );
   }
 }
 
 class Single_prod extends StatelessWidget {
-  final String prod_name, prod_tocountry;
-  final int prod_quantity;
+  final prod_name;
+  final prod_company;
+  final prod_description;
+  final prod_price;
 
-  Single_prod({this.prod_name, this.prod_quantity, this.prod_tocountry});
+  Single_prod({
+    this.prod_name,
+    this.prod_company,
+    this.prod_description,
+    this.prod_price,
+  });
 
   @override
   Widget build(BuildContext context) {
-    Single product = Single(
-        name: prod_name, quantity: prod_quantity, tocountry: prod_tocountry);
     double c_width = MediaQuery.of(context).size.width * 0.9;
     return Container(
       height: 150,
@@ -144,30 +154,12 @@ class Single_prod extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  prod_quantity.toString(),
+                  prod_company,
                   style: TextStyle(fontSize: 12),
                 ),
               ],
             ),
           ),
-          RaisedButton(
-            onPressed: () {
-              //      Navigator.push(
-              // context,
-              // MaterialPageRoute(
-              //   builder: (context)=>ProductList(name:prod_name)
-              Navigator.pushNamed(context, ProductList.routename,
-                  arguments: product);
-            },
-            child: Text(
-              'Request',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            textColor: Colors.white,
-            color: Color(0xFF0C5584),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          )
         ],
       ),
     );

@@ -1,11 +1,11 @@
 //import 'package:covac/otp.dart';
 import 'package:flutter/material.dart';
-//import 'package:firebase_database/firebase_database.dart';
-//import 'citizen.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'country.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 
 //User user;
-//Citizen citizen;
+Country country;
 final namecontroller = TextEditingController();
 final agecontroller = TextEditingController();
 final housenocontroller = TextEditingController();
@@ -16,10 +16,10 @@ final occupationcontroller = TextEditingController();
 final mobilenocontroller = TextEditingController();
 final medicinecontroller = TextEditingController();
 final dosagecontroller = TextEditingController();
-//final dbref = FirebaseDatabase.instance.reference();
+final dbref = FirebaseDatabase.instance.reference();
 
 //void register(
-//  {String name,
+// {String name,
 //int age,
 //    int houseno,
 //  int pincode,
@@ -335,7 +335,7 @@ class _FormRegisterState extends State<FormRegister> {
                                       //   _passwordcontroller.clear();
                                       //   _countrycontroller.clear();
                                       // },
-                                      onPressed: () {  },
+                                      onPressed: () {},
                                       child: Text(
                                         'Register',
                                         style: TextStyle(

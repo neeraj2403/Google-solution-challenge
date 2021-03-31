@@ -1,180 +1,228 @@
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:medicare/order.dart';
+import 'sdetail.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/services.dart';
+import 'country.dart';
+import 'product.dart';
 
+class _manufactureclass {
+  String i_name,
+      i_country,
+      i_quantity,
+      i_tocountry,
+      item_description,
+      item_company,
+      item_price;
+
+  _manufactureclass(
+      this.i_name,
+      this.i_country,
+      this.i_quantity,
+      this.i_tocountry,
+      this.item_description,
+      this.item_company,
+      this.item_price) {}
+}
+
+List<_manufactureclass> conformation = List<_manufactureclass>();
+final quantitycontroller = TextEditingController();
 
 class ProductDetails extends StatefulWidget {
-
-
+  Detail item;
+  ProductDetails(this.item) {
+    print(item.item_name);
+    print(item.item_country);
+    print(item.item_quantity);
+    print(item.item_tocountry);
+  }
   @override
+  static const routename = '/ProductDetails';
+
   _ProductDetailsState createState() => _ProductDetailsState();
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  bool isloading;
+
+  @override
+  void work() async {
+    final dbreference = FirebaseDatabase.instance.reference();
+    String data = widget.item.item_country + '/manufacturing';
+    await dbreference.child(data).once().then((DataSnapshot data) {
+      if (data != null) {
+        conformation.clear();
+        // print(data.value.keys);
+        var keys = data.value.keys;
+        print(keys.runtimeType);
+        print(keys);
+        var values = data.value;
+        for (var key in keys) {
+          if (key == widget.item.item_name) {
+            conformation.add(new _manufactureclass(
+                widget.item.item_name,
+                widget.item.item_country,
+                widget.item.item_quantity,
+                widget.item.item_tocountry,
+                values[key]['description'],
+                values[key]['company'],
+                values[key]['price']));
+          }
+        }
+      } else
+        print('data is empty');
+    });
+    print("done searching");
+
+    setState(() {
+      print("halloo");
+      {
+        isloading = false;
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      isloading = true;
+      work();
+    });
+  }
+
+  ListView generateItemsList() {
+    return ListView.builder(
+        itemCount: conformation.length,
+        scrollDirection: Axis.vertical,
+        itemBuilder: (BuildContext context, int index) {
+          Product products = Product(
+            name: conformation[index].i_name,
+            country: conformation[index].i_country,
+            tocountry: conformation[index].i_tocountry,
+          );
+
+          return Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            color: Colors.white,
+            margin: EdgeInsets.all(15),
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Text(
+                    '${conformation[index].i_name}',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Color(0xFF0C5584),
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    '${conformation[index].i_country}',
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Color(0xFF0C5584),
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    'Company: ${conformation[index].item_company}',
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Color(0xFF0C5584),
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    '${conformation[index].item_description}',
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  Text(
+                    'Pirce:${conformation[index].item_price}',
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  Text(
+                    'Quantity Available:${conformation[index].i_quantity}',
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(color: Colors.grey[200]))),
+                    child: TextFormField(
+                      controller: quantitycontroller,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Quantity Required",
+                          hintStyle: TextStyle(color: Colors.grey[400])),
+                    ),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      // Product products = Product(
+                      //   name: conformation[index].i_name,
+                      //   country: conformation[index].i_country,
+                      //   tocountry: conformation[index].i_tocountry,
+                      //   quantity: quantitycontroller.text.trim,
+                      // );
+                      Navigator.pushNamed(context, OrderPage.routename,
+                          arguments: products);
+                    },
+                    child: Text(
+                      'Place Order',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    textColor: Colors.white,
+                    color: Color(0xFF0C5584),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
 
   Widget build(BuildContext context) {
-        double c_width = MediaQuery.of(context).size.width*0.9;
-
+    SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-         leading: IconButton(
-    icon: Icon(Icons.arrow_back, color: Colors.black),
-    onPressed: () => {},
-  ), 
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                              Container(
-                
-                                  margin: EdgeInsets.only(top: 50),
-                                  child: Text(
-                                    "Odomos",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 35,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Montserrat'),
-                                        
-                                  ),
-                                ),
-    //                           Text(
-    //   "Title",
-    //   style: TextStyle(color: Colors.black, fontSize: 16.0),
-    // ),
-    // Text(
-    //   'Sub Title',
-    //   style: TextStyle(color: Colors.black, fontSize: 14.0),
-    // ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 5),
-                                  child: Text.rich(
-                                    TextSpan(
-
-                                    text:"United States of America",
-                                    style: TextStyle(
-                                        color: Color.fromRGBO(0, 129, 192,1),
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Montserrat'),
-                                  ),
-                                  
-                                  ),
-                                  
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 5,left:5),
-                                  child: Text.rich(
-                                    TextSpan(
-
-                                    text:"Manufactured By : Dabur",
-                                    style: TextStyle(
-                                        color: Color.fromRGBO(236, 151, 89,1),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Montserrat'),
-                                  ),
-                                  
-                                  ),
-                                  
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 20),
-                                  child: Text.rich(
-                                    TextSpan(
-
-                                    text:"25/dose",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 21,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Montserrat'),
-                                  ),
-                                  
-                                  ),
-                                  
-                                ),
-
-                                Container(
-                                  width: c_width,
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Text('In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.',
-                                  textAlign: TextAlign.justify,
-                                  style: TextStyle(
-                                    color: Color.fromRGBO(59,91,108,1)
-                                  ),),
-                                ),
-                                Container(
-                                  height: 150,
-                                  margin: const EdgeInsets.only(left:25,right: 25,top:10),
-                                  decoration: BoxDecoration(
-                                    color: Color.fromRGBO(237,246,251,1)
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.all(20.0),
-                                        margin: const EdgeInsets.only(top:10),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text('Quantity Available',),
-                                            Text('100gm')
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.all(20.0),
-                                        margin: const EdgeInsets.only(top:5),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          
-                                          children: [
-                                          Text('Qunatity Required'),
-                                          Text('20gm')
-                                        ],),
-                                      ),
-                                     
-                                    ],
-                                  ),
-                                ),
-                                 Container(
-                                  height: 1.4 * (MediaQuery.of(context).size.height / 20),
-                                  width: 8.5 * (MediaQuery.of(context).size.width / 10),
-                                  margin: EdgeInsets.only(bottom: 20,top: 20),
-                                  child: RaisedButton(
-                                      elevation: 5.0,
-                                      color: Color.fromRGBO(0, 129, 192, 1.0),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10.0)),
-                                      onPressed: () {},
-                                      child: Text(
-                                        'Checkout',
-                                        style: TextStyle(
-                                          fontSize:
-                                              MediaQuery.of(context).size.height / 40,
-                                              fontWeight: FontWeight.bold,
-                                          // letterSpacing: 1.8,
-                                          color: Colors.white,
-                                        ),
-                                      )),
-                                ),
-                                 
-                                
-              ],
-
-              
-            ),
-          ),
+        appBar: AppBar(
+          backgroundColor: Color(0xFF0C5584),
+          elevation: 0,
+          title: Text("Details Page"),
         ),
-      ),
-
-    );
+        body: Center(
+            child: Stack(children: <Widget>[
+          isloading
+              ? CircularProgressIndicator(
+                  valueColor:
+                      new AlwaysStoppedAnimation<Color>(Color(0xFF0C5584)),
+                  semanticsLabel: "Loading..",
+                  semanticsValue: "Loading..",
+                )
+              : conformation.length == 0
+                  ? Text("This item is removed by the manufacturer",
+                      style: TextStyle(fontSize: 20, color: Color(0xFF0C5584)))
+                  : generateItemsList(),
+        ]))
+        //
+        );
   }
 }
