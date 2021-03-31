@@ -224,7 +224,7 @@ class _ManufactureFormState extends State<ManufactureForm> {
                           // //  login(citizen.mobileno.toString(),context);
                           // Navigator.pushReplacementNamed(
                           //   context, CitizenHomePage.routename,arguments: citizen);
-                          Navigator.pushReplacementNamed(
+                          Navigator.popAndPushNamed(
                               context, Manufacture.routename,
                               arguments: widget.country);
                         });
