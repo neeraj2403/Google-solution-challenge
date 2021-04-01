@@ -7,6 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/services.dart';
 import 'country.dart';
 import 'product.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class _manufactureclass {
   String i_name,
@@ -181,8 +182,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                           //   tocountry: conformation[index].i_tocountry,
                           //   quantity: quantitycontroller.text.trim,
                           // );
-                          Navigator.pushNamed(context, OrderPage.routename,
-                              arguments: products);
+                          print('${conformation[index].i_quantity}'.trimLeft());
+                          String aStr = '${conformation[index].i_quantity}'
+                              .replaceAll(new RegExp(r'[^0-9]'), '');
+                          if (int.parse(quantitycontroller.text) <=
+                              int.parse(aStr)) {
+                            quantitycontroller.clear();
+                            Navigator.pushNamed(context, OrderPage.routename,
+                                arguments: products);
+                          } else {
+                            quantitycontroller.clear();
+                            Fluttertoast.showToast(
+                              msg: ' Input greater than available quantity ',
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Color(0xFF0C5584),
+                              textColor: Colors.white,
+                            );
+                          }
                         },
                         child: Text(
                           'Place Order',

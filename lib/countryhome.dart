@@ -123,7 +123,6 @@ class _CountryHomeState extends State<CountryHome> {
                           end: Alignment.bottomLeft,
                           colors: [Colors.blue, Colors.red])),
                 ),
-                Text("\nHi ${widget.country.name}"),
                 Text('\nWelcome To MediCare',
                     style: TextStyle(
                         color: Colors.white,
@@ -145,7 +144,7 @@ class _CountryHomeState extends State<CountryHome> {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(children: [
                           Text(
-                            "Hi ${widget.country.name}",
+                            "Hi ${widget.country.name} !!",
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Color(0xFF0C5584),
@@ -153,13 +152,90 @@ class _CountryHomeState extends State<CountryHome> {
                             textAlign: TextAlign.center,
                           ),
                           Text(
-                            "MediCare helps in\n effective distribution of \n the medicines & vaccines\n throughout the world!!",
+                            "Your contribution helps MediCare to efficiently distribute the medicines & vaccines throughout the world guaranteeing a healthier world!!",
                             style: TextStyle(
                               fontSize: 15,
                             ),
                             textAlign: TextAlign.center,
                           ),
                         ]))),
+                Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    width: 700,
+                    height: 240,
+                    child: Image.asset('assets/deliver.jpg')),
+                Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    color: Colors.white,
+                    margin: EdgeInsets.all(10),
+                    elevation: 5,
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(children: [
+                          Text(
+                            "Seeking for a care, Medicare provides it !!",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Color(0xFF0C5584),
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            "We gaurantee universal health coverage by ensuring that all the medicines available in world market is available in your country too.\nFind shortage of any medicine, request it from anywhere in the world and get it delivered in your country",
+                            style: TextStyle(
+                              fontSize: 15,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          RaisedButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, RequestsPage.routename,
+                                  arguments: widget.country);
+                            },
+                            child: Text(
+                              'Request Imports',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            textColor: Colors.white,
+                            color: Color(0xFF0C5584),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                          )
+                        ]))),
+                Text(
+                  "\nStatistics of your country",
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    width: 380,
+                    height: 250,
+                    child: Image.asset('assets/disease.jpeg')),
+                Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    width: 380,
+                    height: 240,
+                    child: Image.asset('assets/manufacture.jpeg')),
+                Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    width: 380,
+                    height: 240,
+                    child: Image.asset('assets/export.jpeg')),
               ],
             ),
           ),

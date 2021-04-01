@@ -73,7 +73,7 @@ class HomePageState extends State<HomePage> {
                           height: 40,
                         ),
                         Text(
-                          'MENU BAR',
+                          'MENU',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 40,

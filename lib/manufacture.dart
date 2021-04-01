@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -64,6 +66,13 @@ class _ManufactureState extends State<Manufacture> {
     });
   }
 
+  FutureOr onGoBack(dynamic value) {
+    setState(() {
+      isloading = true;
+      work();
+    });
+  }
+
   ListView generateItemsList() {
     return ListView.builder(
         itemCount: conformationList.length,
@@ -95,7 +104,8 @@ class _ManufactureState extends State<Manufacture> {
             ),
             onPressed: () {
               Navigator.pushNamed(context, '/ManufactureForm',
-                  arguments: widget.country);
+                      arguments: widget.country)
+                  .then(onGoBack);
             },
           )
         ],
